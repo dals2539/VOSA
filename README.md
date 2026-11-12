@@ -11,7 +11,7 @@ This repository contains the training and testing code. Pretrained weights and d
 ## Framework
 
 * **Stage 1 (`VOSAStage1`)**: an intra-epoch model trained on single 30-s epochs. For each second, a signal-wise Transformer runs over the 25 signal rows plus a CLS token. A time-wise Transformer (3 layers, 64-d) then runs over the 30 seconds and classifies each second.
-* **Stage 2 (`VOSAStage2`)**: an inter-epoch model. The Stage-1 signal-wise encoder is frozen and applied to epochs *t-1*, *t* and *t+1*. A new time-wise Transformer attends over the combined 90 s and predicts the 30 labels of the centre epoch.
+* **Stage 2 (`VOSAStage2`)**: an inter-epoch model. The Stage-1 signal-wise encoder is frozen and applied to epochs *t-1*, *t* and *t+1*. A new time-wise Transformer attends over the combined 90 s and predicts the 30 labels of the center epoch.
 * **AHI estimation**: predicted events shorter than 10 s are removed. The number of remaining apnea/hypopnea events is divided by the total sleep time in hours.
 
 ---
@@ -91,7 +91,7 @@ Labels have **one value per second**:
 Image `k` of a recording covers seconds `[30(k-1), 30k)`, so its label is a vector of length 30.
 
 For the NSRR datasets, the labels are derived from the Profusion XML annotations with [`preprocess/make_labels.py`](preprocess/make_labels.py). 
-Only events that count toward the AHI are labelled:
+Only events that count toward the AHI are labeled:
 
 * **Apnea (2)**: an obstructive or central apnea scored during sleep.
 * **Hypopnea (1)**: a hypopnea scored during sleep that is followed by an SpO2 desaturation of at least 3 % starting within 45 s of its end, or by an arousal starting within 5 s of its end.
@@ -187,7 +187,7 @@ python test_ahi.py --test_set SHHS2_test \
 
 ```
 VOSA/
-├── model/vosa.py            # VOSA_stage1, VOSA_stage2 
+├── model/vosa.py            # VOSAStage1, VOSAStage2 
 ├── datasets.py              # index loading, EpochDataset (Stage 1), ContextDataset (Stage 2)
 ├── utils.py                 # metrics, AHI post-processing
 ├── train_stage1.py
@@ -202,7 +202,7 @@ VOSA/
 
 ## License
 
-This project is released under the [MIT License](LICENSE). 
+This project is released under the [MIT License](LICENSE), except preprocess/make_labels.py (see the file header).
 
 ## Acknowledgement
 
